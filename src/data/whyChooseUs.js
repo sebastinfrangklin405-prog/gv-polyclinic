@@ -8,17 +8,20 @@ import {
   FaMapMarkerAlt,
   FaHandHoldingMedical,
 } from "react-icons/fa";
+import { DEPARTMENTS } from "./departments";
 
 export const WHY_CHOOSE_US = [
   {
     icon: FaUserMd,
-    title: "Experienced Medical Team",
-    description: "Board-certified doctors with years of specialized clinical practice.",
+    title: "Qualified Medical Team",
+    description: "Skilled doctors dedicated to accurate, patient-first care.",
   },
   {
     icon: FaLayerGroup,
     title: "Multiple Specialties",
-    description: "Ten+ departments under one roof, so care is coordinated and convenient.",
+    // No "+" — there are exactly this many departments, and "4+" reads as
+    // "more than four" on a page where the four are listed by name.
+    description: `${DEPARTMENTS.length} departments under one roof, so care is coordinated and convenient.`,
   },
   {
     icon: FaHeart,

@@ -1,114 +1,141 @@
-import {
-  FaFacebookF,
-  FaInstagram,
-  FaTwitter,
-  FaLinkedinIn,
-  FaMapMarkerAlt,
-  FaPhoneAlt,
-  FaEnvelope,
-} from "react-icons/fa";
+import { FaMapMarkerAlt, FaPhoneAlt, FaRegClock, FaEnvelope } from "react-icons/fa";
 import Logo from "../ui/Logo";
+import { NAV_LINKS } from "../../data/navigation";
 import { DEPARTMENTS } from "../../data/departments";
-import { SERVICES } from "../../data/services";
+import { CLINIC, FULL_ADDRESS } from "../../data/clinic";
 
-const QUICK_LINKS = [
-  { label: "About Us", href: "#about" },
-  { label: "Doctors", href: "#doctors" },
-  { label: "Facilities", href: "#facilities" },
-  { label: "Testimonials", href: "#testimonials" },
-  { label: "Contact", href: "#contact" },
-];
-
-const SOCIALS = [
-  { icon: FaFacebookF, label: "Facebook", href: "https://facebook.com" },
-  { icon: FaInstagram, label: "Instagram", href: "https://instagram.com" },
-  { icon: FaTwitter, label: "Twitter", href: "https://twitter.com" },
-  { icon: FaLinkedinIn, label: "LinkedIn", href: "https://linkedin.com" },
-];
-
+/**
+ * Every link here goes somewhere real.
+ *
+ * The previous footer shipped `href="#"` for Privacy and Terms, social icons
+ * pointing at facebook.com / twitter.com homepages, and a hardcoded "© 2026".
+ * Placeholder links read as an abandoned site, which is the opposite of what a
+ * clinic footer is for — so anything unresolved is omitted until it exists.
+ *
+ * Body text is white/70 rather than the old white/30 and white/40, both of
+ * which failed WCAG AA against this background.
+ */
 export default function Footer() {
+  const year = new Date().getFullYear();
+  const legalLinks = Object.entries(CLINIC.legal).filter(([, href]) => Boolean(href));
+
   return (
-    <footer className="bg-ink-900 text-white">
-      <div className="container-clinic grid gap-12 py-16 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
+    <footer className="on-dark bg-ink-900 text-white">
+      <div className="container-page grid gap-10 py-14 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
         <div className="flex flex-col gap-4 sm:col-span-2 lg:col-span-1">
-          <Logo />
-          <p className="text-sm leading-relaxed text-white/60">
-            GV Polyclinic delivers comprehensive, patient-first healthcare across ten+
-            specialties — combining experienced doctors with modern facilities.
+          <Logo onDark />
+          <p className="text-sm text-white/70">
+            Comprehensive, patient-first healthcare across {DEPARTMENTS.length}{" "}
+            specialties — skilled doctors and modern diagnostics under one roof.
           </p>
-          <div className="flex items-center gap-3 pt-1">
-            {SOCIALS.map(({ icon: Icon, label, href }) => (
-              <a
-                key={label}
-                href={href}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={label}
-                className="flex h-9 w-9 items-center justify-center rounded-full bg-white/10 text-white transition-colors duration-300 hover:bg-teal-500"
-              >
-                <Icon size={14} />
-              </a>
-            ))}
-          </div>
+
+          {CLINIC.socials.length > 0 && (
+            <ul className="flex items-center gap-3 pt-1">
+              {CLINIC.socials.map(({ icon: Icon, label, href }) => (
+                <li key={label}>
+                  <a
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={label}
+                    className="tap flex items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-brand-600"
+                  >
+                    <Icon size={15} />
+                  </a>
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
 
-        <div>
-          <h4 className="text-sm font-bold uppercase tracking-wide text-white/80">Quick Links</h4>
-          <ul className="mt-4 flex flex-col gap-2.5">
-            {QUICK_LINKS.map((link) => (
+        <nav aria-labelledby="footer-explore">
+          <h2 id="footer-explore" className="text-sm font-bold uppercase tracking-wide text-white">
+            Explore
+          </h2>
+          <ul className="mt-4 flex flex-col gap-1">
+            {NAV_LINKS.map((link) => (
               <li key={link.href}>
-                <a href={link.href} className="text-sm text-white/60 transition-colors hover:text-teal-400">
+                <a
+                  href={link.href}
+                  className="tap flex items-center text-sm text-white/70 transition-colors hover:text-white"
+                >
                   {link.label}
                 </a>
               </li>
             ))}
           </ul>
-        </div>
+        </nav>
 
-        <div>
-          <h4 className="text-sm font-bold uppercase tracking-wide text-white/80">Departments</h4>
-          <ul className="mt-4 flex flex-col gap-2.5">
-            {DEPARTMENTS.slice(0, 6).map((dept) => (
+        <nav aria-labelledby="footer-departments">
+          <h2 id="footer-departments" className="text-sm font-bold uppercase tracking-wide text-white">
+            Departments
+          </h2>
+          <ul className="mt-4 flex flex-col gap-1">
+            {DEPARTMENTS.map((dept) => (
               <li key={dept.id}>
-                <a href="#departments" className="text-sm text-white/60 transition-colors hover:text-teal-400">
+                <a
+                  href="#care"
+                  className="tap flex items-center text-sm text-white/70 transition-colors hover:text-white"
+                >
                   {dept.name}
                 </a>
               </li>
             ))}
           </ul>
-        </div>
+        </nav>
 
         <div>
-          <h4 className="text-sm font-bold uppercase tracking-wide text-white/80">Contact</h4>
+          <h2 className="text-sm font-bold uppercase tracking-wide text-white">Contact</h2>
           <ul className="mt-4 flex flex-col gap-3">
-            <li className="flex items-start gap-2.5 text-sm text-white/60">
-              <FaMapMarkerAlt className="mt-0.5 shrink-0 text-teal-400" />
-              64/58, Kamarajar Salai, Bishop Garden, Raja Annamalaipuram, Chennai, Tamil Nadu 600028
+            <li className="flex items-start gap-2.5 text-sm text-white/70">
+              <FaMapMarkerAlt className="mt-1 shrink-0 text-brand-400" />
+              <address className="not-italic">{FULL_ADDRESS}</address>
             </li>
-            <li className="flex items-center gap-2.5 text-sm text-white/60">
-              <FaPhoneAlt className="shrink-0 text-teal-400" />
-              <a href="tel:+918610351469" className="hover:text-teal-400">+91 86103 51469</a>
-            </li>
-            <li className="flex items-center gap-2.5 text-sm text-white/60">
-              <FaEnvelope className="shrink-0 text-teal-400" />
-              <a href="mailto:care@gvpolyclinic.example" className="hover:text-teal-400">
-                care@gvpolyclinic.example
+            {CLINIC.phones.map((phone) => (
+              <li key={phone.href} className="flex items-center gap-2.5 text-sm text-white/70">
+                <FaPhoneAlt className="shrink-0 text-brand-400" />
+                <a
+                  href={phone.href}
+                  className="inline-flex min-h-11 items-center hover:text-white"
+                >
+                  {phone.display}
+                </a>
+              </li>
+            ))}
+            <li className="flex items-start gap-2.5 text-sm text-white/70">
+              <FaEnvelope className="mt-3.5 shrink-0 text-brand-400" />
+              <a
+                href={`mailto:${CLINIC.email}`}
+                className="inline-flex min-h-11 items-center break-all hover:text-white"
+              >
+                {CLINIC.email}
               </a>
             </li>
+            <li className="flex items-center gap-2.5 text-sm text-white/70">
+              <FaRegClock className="shrink-0 text-brand-400" />
+              Open 24 hours, every day
+            </li>
           </ul>
-          <p className="mt-3 text-[11px] text-white/30">
-            {SERVICES.length}+ services available across departments
-          </p>
         </div>
       </div>
 
       <div className="border-t border-white/10">
-        <div className="container-clinic flex flex-col items-center justify-between gap-3 py-6 text-xs text-white/40 sm:flex-row">
-          <p>© 2026 GV Polyclinic. All Rights Reserved.</p>
-          <div className="flex items-center gap-5">
-            <a href="#" className="hover:text-teal-400">Privacy Policy</a>
-            <a href="#" className="hover:text-teal-400">Terms &amp; Conditions</a>
-          </div>
+        <div className="container-page flex flex-col items-center justify-between gap-3 py-5 text-xs text-white/70 sm:flex-row">
+          <p>
+            © {year} {CLINIC.name}. All rights reserved.
+          </p>
+
+          {legalLinks.length > 0 && (
+            <ul className="flex items-center gap-5">
+              {legalLinks.map(([label, href]) => (
+                <li key={label}>
+                  <a href={href} className="capitalize hover:text-white">
+                    {label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
       </div>
     </footer>

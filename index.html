@@ -2,14 +2,101 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+
+    <title>GV Polyclinic — 24-Hour Multispecialty Clinic in Raja Annamalaipuram, Chennai</title>
+    <meta
+      name="description"
+      content="GV Polyclinic in Raja Annamalaipuram, Chennai. General Medicine, Gynecology, ENT and Urology under one roof, open 24 hours. Book an appointment or walk in — no referral needed."
+    />
+
+    <!-- Was declared as image/svg+xml while pointing at a .webp, so the icon
+         could fail to render. favicon.svg now matches the red brand mark. -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="GV Polyclinic — Comprehensive care, trusted doctors, and better health under one roof. Book appointments, explore specialties, health packages and more." />
-    <meta name="theme-color" content="#0d5c9e" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-    <title>GV Polyclinic — Comprehensive Care. Trusted Doctors. Better Health.</title>
+    <link rel="apple-touch-icon" href="/logo.webp" />
+    <meta name="theme-color" content="#a81e26" />
+    <meta name="color-scheme" content="light" />
+
+    <!-- Fonts are self-hosted via @fontsource-variable (imported in main.jsx):
+         one variable woff2 in place of ~11 files across two third-party
+         origins, so no preconnect is needed here any more. -->
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="GV Polyclinic" />
+    <meta property="og:title" content="GV Polyclinic — 24-Hour Multispecialty Clinic in Chennai" />
+    <meta
+      property="og:description"
+      content="Four specialties, five qualified doctors and on-site diagnostics in Raja Annamalaipuram — open 24 hours, every day."
+    />
+    <meta property="og:image" content="/logo.webp" />
+    <meta property="og:locale" content="en_IN" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="GV Polyclinic — 24-Hour Multispecialty Clinic in Chennai" />
+    <meta
+      name="twitter:description"
+      content="Four specialties, five qualified doctors and on-site diagnostics in Raja Annamalaipuram — open 24 hours, every day."
+    />
+    <meta name="twitter:image" content="/logo.webp" />
+
+    <!-- Structured data drives the Google local pack, which is where most
+         patients searching "clinic near me" actually land. Every value here
+         mirrors src/data/clinic.js — keep the two in step. -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "MedicalClinic",
+        "name": "GV Polyclinic",
+        "description": "Multispecialty polyclinic in Raja Annamalaipuram, Chennai, offering General Medicine, Gynecology, ENT and Urology with on-site diagnostics and pharmacy.",
+        "url": "https://gvpolyclinic.com/",
+        "logo": "https://gvpolyclinic.com/logo.webp",
+        "image": "https://gvpolyclinic.com/logo.webp",
+        "telephone": "+91-86103-51469",
+        "email": "gvpolyclinic2026@gmail.com",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "64/58, Kamarajar Salai, Bishop Garden",
+          "addressLocality": "Raja Annamalaipuram, Chennai",
+          "addressRegion": "Tamil Nadu",
+          "postalCode": "600028",
+          "addressCountry": "IN"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": 13.0205262,
+          "longitude": 80.2594959
+        },
+        "hasMap": "https://maps.app.goo.gl/UJsNmY37dtTccCht6",
+        "openingHoursSpecification": [
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": [
+              "Monday",
+              "Tuesday",
+              "Wednesday",
+              "Thursday",
+              "Friday",
+              "Saturday",
+              "Sunday"
+            ],
+            "opens": "00:00",
+            "closes": "23:59"
+          }
+        ],
+        "availableService": [
+          { "@type": "MedicalProcedure", "name": "General Consultation" },
+          { "@type": "MedicalProcedure", "name": "Diagnostic Services" },
+          { "@type": "MedicalProcedure", "name": "Health Checkups" },
+          { "@type": "MedicalProcedure", "name": "Vaccination" },
+          { "@type": "MedicalProcedure", "name": "Laboratory Services" }
+        ],
+        "medicalSpecialty": [
+          "PrimaryCare",
+          "Obstetric",
+          "Otolaryngologic",
+          "Urologic"
+        ]
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>

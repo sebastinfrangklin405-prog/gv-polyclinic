@@ -12,7 +12,7 @@ export const FAQS = [
   {
     question: "What specialties are available?",
     answer:
-      "We offer General Medicine, Pediatrics, Cardiology, Dermatology, Orthopedics, Gynecology, ENT, Dental Care, Physiotherapy, and Ophthalmology, all under one roof.",
+      "We currently offer General Medicine, Gynecology, ENT, and Urology, all under one roof — with more specialties on the way as our team grows.",
   },
   {
     question: "Do you provide health checkups?",
@@ -27,7 +27,7 @@ export const FAQS = [
   {
     question: "Can I choose a specific doctor?",
     answer:
-      "Absolutely. During booking, you can select your preferred doctor based on department, availability, and experience.",
+      "Absolutely. During booking, you can select your preferred doctor based on department and specialization.",
   },
   {
     question: "What are the clinic working hours?",

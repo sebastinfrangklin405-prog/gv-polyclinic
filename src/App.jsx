@@ -1,48 +1,60 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Header from "./components/layout/Header";
 import Footer from "./components/layout/Footer";
 import Hero from "./components/sections/Hero";
-import QuickInfo from "./components/sections/QuickInfo";
+import Care from "./components/sections/Care";
+import Booking from "./components/sections/Booking";
 import About from "./components/sections/About";
-import Departments from "./components/sections/Departments";
-import Doctors from "./components/sections/Doctors";
-import AppointmentForm from "./components/sections/AppointmentForm";
-import Services from "./components/sections/Services";
 import Facilities from "./components/sections/Facilities";
-import WhyChooseUs from "./components/sections/WhyChooseUs";
-import Testimonials from "./components/sections/Testimonials";
-import FAQ from "./components/sections/FAQ";
-import Contact from "./components/sections/Contact";
+import Visit from "./components/sections/Visit";
+import SkipLink from "./components/ui/SkipLink";
 import BackToTop from "./components/ui/BackToTop";
-import Loader from "./components/ui/Loader";
+import MobileActionBar from "./components/ui/MobileActionBar";
+import { DEPARTMENTS } from "./data/departments";
 
 export default function App() {
-  const [loading, setLoading] = useState(true);
+  // Shared between Care and Booking: choosing a department or a doctor in the
+  // Care section carries that choice into the form, so nobody re-picks what
+  // they just clicked. Previously the two only met inside the form's selects.
+  const [activeDepartment, setActiveDepartment] = useState(DEPARTMENTS[0].id);
+  const [bookingSeed, setBookingSeed] = useState({ department: "", doctor: "" });
 
-  useEffect(() => {
-    const timer = setTimeout(() => setLoading(false), 700);
-    return () => clearTimeout(timer);
-  }, []);
+  const handleDepartmentChange = (id) => {
+    setActiveDepartment(id);
+    setBookingSeed({ department: id, doctor: "" });
+  };
+
+  const handleBookDoctor = (doctor) => {
+    const department = DEPARTMENTS.find((item) => item.name === doctor.specialization);
+    setBookingSeed({ department: department?.id ?? "", doctor: doctor.id });
+  };
 
   return (
     <>
-      <Loader show={loading} />
+      {/* The old build showed a blank white screen for a hardcoded 700ms before
+          rendering anything. There is no loader here — the page is the loader. */}
+      <SkipLink />
       <Header />
-      <main>
+
+      <main id="main">
         <Hero />
-        <QuickInfo />
+        <Care
+          activeDepartment={activeDepartment}
+          onDepartmentChange={handleDepartmentChange}
+          onBookDoctor={handleBookDoctor}
+        />
+        <Booking seed={bookingSeed} />
         <About />
-        <Departments />
-        <Doctors />
-        <AppointmentForm />
-        <Services />
         <Facilities />
-        <WhyChooseUs />
-        <Testimonials />
-        <FAQ />
-        <Contact />
+        <Visit />
       </main>
+
       <Footer />
+
+      {/* Keeps the fixed mobile action bar from covering the footer's last row. */}
+      <div aria-hidden="true" className="h-16 lg:hidden" />
+
+      <MobileActionBar />
       <BackToTop />
     </>
   );

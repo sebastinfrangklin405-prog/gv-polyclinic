@@ -1,103 +1,270 @@
 @import "tailwindcss";
 
+/* ==========================================================================
+   GV Polyclinic — design tokens
+   Palette is derived from the brand mark in /logo.webp (a red heart + ECG
+   line). Red is the brand, so red is ALSO the only colour allowed to fill a
+   surface — see the feedback-colour note below.
+   ========================================================================== */
+
 @theme {
-  --font-display: "Plus Jakarta Sans", "Manrope", ui-sans-serif, system-ui, sans-serif;
-  --font-body: "Manrope", ui-sans-serif, system-ui, sans-serif;
+  /* --- Breakpoints -------------------------------------------------------
+     Defaults plus the two missing ends. No arbitrary min-[…] values are used
+     anywhere in this codebase; if a layout seems to need one, the layout is
+     wrong — reach for a container query or an auto-fit grid instead. */
+  --breakpoint-xs: 30rem;    /* 480 — large phones */
+  --breakpoint-3xl: 112.5rem; /* 1800 — large / ultrawide */
 
-  --color-ink-900: #0b2338;
-  --color-ink-700: #16344c;
-  --color-ink-500: #4d6a80;
-  --color-ink-300: #8ea3b3;
+  /* --- Typeface ----------------------------------------------------------
+     One family, self-hosted as a single variable woff2. */
+  --font-sans: "Plus Jakarta Sans Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-sans);
 
-  --color-primary-50: #eaf3fb;
-  --color-primary-100: #cfe4f5;
-  --color-primary-400: #2778b5;
-  --color-primary-500: #14609e;
-  --color-primary-600: #0d5c9e;
-  --color-primary-700: #0a4a80;
-  --color-primary-900: #062e50;
+  /* --- Brand ------------------------------------------------------------- */
+  --color-brand-50: #fdf3f3;
+  --color-brand-100: #fae3e4;
+  --color-brand-200: #f3c4c6;
+  --color-brand-300: #e99699;
+  --color-brand-400: #d9565c;
+  --color-brand-500: #c22f37;
+  --color-brand-600: #a81e26; /* core — matches the logo */
+  --color-brand-700: #8a171c;
+  --color-brand-800: #6e161a;
+  --color-brand-900: #4a1013;
 
-  --color-teal-50: #e6faf7;
-  --color-teal-100: #c3f3ea;
-  --color-teal-400: #1fc3ae;
-  --color-teal-500: #0fb3a0;
-  --color-teal-600: #0c9587;
+  /* --- Neutrals ----------------------------------------------------------
+     Warm-shifted so they sit with the red rather than fighting it. */
+  --color-ink-900: #16181c; /* headings */
+  --color-ink-700: #2e3238;
+  --color-ink-600: #4a515a; /* body copy */
+  /* Secondary text + placeholders. Chosen to clear 4.5:1 against all three
+     surfaces, not just white — on surface-50 the previous value measured 4.47
+     and on surface-100 4.21, so it failed exactly where most secondary text
+     sits. Now 5.09 / 4.81 / 4.53. */
+  --color-ink-500: #666f7b;
+  --color-ink-300: #b4bac2; /* BORDERS AND DIVIDERS ONLY — never text (2.2:1) */
+  --color-ink-200: #dfe3e8;
+  --color-ink-100: #edeff2;
 
-  --color-mint-50: #eefaf1;
-  --color-mint-400: #3cbb73;
-  --color-mint-500: #2fae63;
+  /* --- Surfaces ----------------------------------------------------------- */
+  --color-surface-0: #ffffff;
+  --color-surface-50: #faf8f7; /* warm off-white page base */
+  --color-surface-100: #f4f1ef;
 
-  --color-amber-400: #f5a623;
+  /* --- Accent — trust, success, secondary action --------------------------- */
+  --color-accent-50: #eaf6f3;
+  --color-accent-100: #cfeae4;
+  --color-accent-500: #12907c;
+  --color-accent-600: #0e7c6b; /* 4.9:1 on white */
+  --color-accent-700: #0b6255;
 
-  --shadow-soft: 0 10px 30px -12px rgba(13, 92, 158, 0.18);
-  --shadow-soft-lg: 0 25px 60px -20px rgba(13, 92, 158, 0.28);
+  /* --- Feedback -----------------------------------------------------------
+     The brand IS red, so "red = error" is unavailable to us. The rule that
+     keeps the two apart: brand red is the only red that ever FILLS a surface.
+     Errors are outline + text + a mandatory icon, never colour alone (which
+     WCAG 1.4.1 requires regardless). */
+  --color-danger: #8a171c;
+  --color-danger-border: #e99699;
+  --color-danger-bg: #fdf3f3;
+  --color-success: #0e7c6b;
+  --color-warning: #8a5700;
+
+  /* --- Focus -------------------------------------------------------------- */
+  --color-focus: #a81e26;
+
+  /* --- Fluid type ---------------------------------------------------------
+     Continuous interpolation, so type is correct at EVERY width rather than
+     stepping at three breakpoints. */
+  --text-xs: 0.75rem;
+  --text-xs--line-height: 1.5;
+  --text-sm: 0.875rem;
+  --text-sm--line-height: 1.55;
+  --text-base: clamp(1rem, 0.97rem + 0.15vw, 1.0625rem);
+  --text-base--line-height: 1.65;
+  --text-lg: clamp(1.0625rem, 1rem + 0.3vw, 1.1875rem);
+  --text-lg--line-height: 1.6;
+  --text-xl: clamp(1.1875rem, 1.1rem + 0.4vw, 1.375rem);
+  --text-xl--line-height: 1.5;
+  --text-2xl: clamp(1.375rem, 1.25rem + 0.6vw, 1.625rem);
+  --text-2xl--line-height: 1.35;
+  --text-3xl: clamp(1.625rem, 1.4rem + 1.1vw, 2.125rem);
+  --text-3xl--line-height: 1.25;
+  --text-4xl: clamp(2rem, 1.6rem + 1.9vw, 2.75rem);
+  --text-4xl--line-height: 1.15;
+  --text-5xl: clamp(2.375rem, 1.8rem + 2.9vw, 3.75rem);
+  --text-5xl--line-height: 1.08;
+
+  /* --- Elevation ----------------------------------------------------------
+     Neutral-tinted on purpose: brand-tinted shadows go pink on a red palette. */
+  --shadow-e1: 0 1px 2px rgba(22, 24, 28, 0.04), 0 1px 3px rgba(22, 24, 28, 0.06);
+  --shadow-e2: 0 2px 4px rgba(22, 24, 28, 0.04), 0 4px 12px rgba(22, 24, 28, 0.08);
+  --shadow-e3: 0 8px 16px rgba(22, 24, 28, 0.06), 0 16px 40px rgba(22, 24, 28, 0.12);
+
+  /* --- Radius ------------------------------------------------------------- */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+
+  /* --- Motion ------------------------------------------------------------- */
+  --ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-fast: 150ms;
+  --dur-base: 250ms;
+  --dur-slow: 400ms;
 }
 
 @layer base {
+  /* Header measures itself and writes --header-h here (see useHeaderHeight).
+     The old hardcoded 88px was wrong in three of the header's four states. */
+  :root {
+    --header-h: 4.5rem;
+  }
+
   * {
     box-sizing: border-box;
+    min-width: 0; /* stops grid/flex children forcing overflow */
   }
 
   html {
     scroll-behavior: smooth;
-    scroll-padding-top: 88px;
+    scroll-padding-top: calc(var(--header-h) + 1rem);
+    -webkit-text-size-adjust: 100%;
   }
 
   body {
-    font-family: var(--font-body);
-    color: var(--color-ink-700);
-    background: #ffffff;
+    font-family: var(--font-sans);
+    color: var(--color-ink-600);
+    background: var(--color-surface-0);
     -webkit-font-smoothing: antialiased;
-    overflow-x: hidden;
+    text-rendering: optimizeLegibility;
+    /* NOTE: `overflow-x: hidden` deliberately absent. It was masking a real
+       overflow from the old hero floaters, and it makes WCAG 1.4.10 reflow
+       failures at 400% zoom impossible to detect. Fix overflow at the source. */
   }
 
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-display);
     color: var(--color-ink-900);
-    letter-spacing: -0.01em;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
   }
 
+  p {
+    text-wrap: pretty;
+  }
+
+  img, svg, video, iframe {
+    display: block;
+    max-width: 100%;
+  }
+
+  /* Outline, not box-shadow: an element's own `overflow: hidden` does not clip
+     its own outline. The rule that keeps it visible is in the markup — keep
+     `overflow-hidden` off any ancestor of a focusable element. */
   :focus-visible {
-    outline: 2px solid var(--color-teal-500);
-    outline-offset: 3px;
-    border-radius: 4px;
+    outline: 2px solid var(--color-focus);
+    outline-offset: 2px;
+    border-radius: var(--radius-sm);
+  }
+
+  /* Dark bands need a light ring to stay visible. */
+  .on-dark :focus-visible {
+    outline-color: #ffffff;
   }
 
   ::selection {
-    background: var(--color-teal-100);
-    color: var(--color-ink-900);
+    background: var(--color-brand-100);
+    color: var(--color-brand-900);
+  }
+
+  ::placeholder {
+    color: var(--color-ink-500);
   }
 }
 
-@layer utilities {
-  .container-clinic {
+@layer components {
+  /* One container. The header aligns to the content — previously the header
+     capped at 1640px while every section capped at 1280px, so on any display
+     wider than 1280px the two were visibly misaligned. */
+  .container-page {
     width: 100%;
-    max-width: 1280px;
+    max-width: 80rem; /* 1280 */
     margin-inline: auto;
-    padding-inline: 1.25rem;
+    padding-inline: 1rem;
   }
 
-  @media (min-width: 640px) {
-    .container-clinic { padding-inline: 2rem; }
+  @media (min-width: 40rem) {
+    .container-page { padding-inline: 1.5rem; }
   }
 
-  .container-header {
-    width: 100%;
-    max-width: 1640px;
-    margin-inline: auto;
-    padding-inline: 1.25rem;
+  @media (min-width: 64rem) {
+    .container-page { padding-inline: 2rem; }
   }
 
-  @media (min-width: 640px) {
-    .container-header { padding-inline: 2rem; }
+  /* Large displays gain content, not margin. */
+  @media (min-width: 112.5rem) {
+    .container-page { max-width: 90rem; }
   }
 
   .section-pad {
     padding-block: clamp(3.5rem, 6vw, 6.5rem);
   }
 
+  /* Caps measure independently of the container, so a single-column tablet
+     layout never runs 110-character lines. */
+  .measure {
+    max-width: 65ch;
+  }
+
+  .measure-tight {
+    max-width: 46ch;
+  }
+
+  /* Reflows at every width instead of stepping at three breakpoints. */
+  .auto-grid {
+    display: grid;
+    gap: 1.25rem;
+    grid-template-columns: repeat(auto-fit, minmax(min(16rem, 100%), 1fr));
+  }
+
+  .auto-grid-sm {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(min(13rem, 100%), 1fr));
+  }
+
+  /* Like .auto-grid, but tracks stop growing at 22rem instead of sharing all
+     the leftover space. Most departments here have a single doctor, and a
+     `1fr` track stretched that one card across the full 1216px container —
+     a postage-stamp avatar adrift in white space above a metre-wide button.
+     Capping the track keeps one card the same size as one of three. */
+  .card-grid {
+    display: grid;
+    gap: 1.25rem;
+    /* 21rem, not 22rem: at 768px the container offers 720px, and two 22rem
+       tracks plus the gap need 724px — so iPad portrait dropped to a single
+       column by 4px. 21rem clears it with room to spare. */
+    grid-template-columns: repeat(auto-fit, minmax(min(17rem, 100%), 21rem));
+  }
+
+  .card {
+    background: var(--color-surface-0);
+    border: 1px solid var(--color-ink-100);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-e1);
+  }
+
+  /* WCAG 2.2 SC 2.5.8 floors at 24px; 44px is the usable target. Applied to
+     every interactive element below `lg`. */
+  .tap {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
+@layer utilities {
   .text-gradient {
-    background: linear-gradient(100deg, var(--color-primary-600), var(--color-teal-500) 85%);
+    background: linear-gradient(100deg, var(--color-brand-600), var(--color-brand-400) 90%);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
@@ -108,44 +275,99 @@
     background-size: 22px 22px;
   }
 
-  .card-surface {
-    background: #ffffff;
-    border: 1px solid rgba(13, 92, 158, 0.08);
-    box-shadow: var(--shadow-soft);
+  /* Respects the iPhone home indicator / Android gesture bar. */
+  .pb-safe {
+    padding-bottom: env(safe-area-inset-bottom, 0px);
   }
 
-  .animate-float {
-    animation: float 6s ease-in-out infinite;
+  .scroll-row {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    overscroll-behavior-x: contain;
   }
-  .animate-float-slow {
-    animation: float 9s ease-in-out infinite;
-  }
-  .animate-float-delay {
-    animation: float 7s ease-in-out infinite;
-    animation-delay: 1.2s;
-  }
+
+  .scroll-row::-webkit-scrollbar { display: none; }
+  .scroll-row > * { scroll-snap-align: start; flex: none; }
 
   @keyframes float {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-14px); }
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
   }
+
+  .animate-float { animation: float 6s var(--ease-soft) infinite; }
+  .animate-float-slow { animation: float 9s var(--ease-soft) infinite; }
+  .animate-float-delay { animation: float 7s var(--ease-soft) infinite 1.2s; }
 
   @keyframes pulse-ring {
-    0% { box-shadow: 0 0 0 0 rgba(15, 179, 160, 0.35); }
-    100% { box-shadow: 0 0 0 16px rgba(15, 179, 160, 0); }
-  }
-  .animate-pulse-ring {
-    animation: pulse-ring 2.2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    0% { box-shadow: 0 0 0 0 rgba(14, 124, 107, 0.35); }
+    100% { box-shadow: 0 0 0 12px rgba(14, 124, 107, 0); }
   }
 
-  @keyframes marquee {
-    from { transform: translateX(0); }
-    to { transform: translateX(-50%); }
-  }
-  .animate-marquee {
-    animation: marquee 32s linear infinite;
+  .animate-pulse-ring { animation: pulse-ring 2.2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+}
+
+/* ==========================================================================
+   Reduced motion
+   Layer one of two. Layer two lives in Reveal.jsx — CSS alone is not enough
+   there, because Reveal starts at opacity:0 and must render VISIBLE rather
+   than animate instantly.
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
   }
 
-  .scrollbar-none::-webkit-scrollbar { display: none; }
-  .scrollbar-none { scrollbar-width: none; -ms-overflow-style: none; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ==========================================================================
+   Print — patients do print clinic pages for the address and hours.
+   ========================================================================== */
+@media print {
+  @page {
+    margin: 1.5cm;
+  }
+
+  body {
+    background: #fff;
+    color: #000;
+    font-size: 11pt;
+  }
+
+  /* Dark bands eat an entire ink cartridge and print illegibly. */
+  .on-dark, .on-dark * {
+    background: transparent !important;
+    color: #000 !important;
+    box-shadow: none !important;
+  }
+
+  header, footer nav, .no-print,
+  [data-print="hide"] {
+    display: none !important;
+  }
+
+  a[href^="http"]::after {
+    content: " (" attr(href) ")";
+    font-size: 9pt;
+    word-break: break-all;
+  }
+
+  a[href^="#"]::after,
+  a[href^="tel"]::after,
+  a[href^="mailto"]::after {
+    content: "";
+  }
+
+  .card, section {
+    break-inside: avoid;
+    box-shadow: none !important;
+    border-color: #999 !important;
+  }
 }

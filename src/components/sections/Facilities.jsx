@@ -1,32 +1,55 @@
+import { FaCheck } from "react-icons/fa";
 import Reveal from "../ui/Reveal";
 import SectionHeading from "../ui/SectionHeading";
 import { FACILITIES } from "../../data/facilities";
 
+/**
+ * Presented as a spec sheet rather than a card grid.
+ *
+ * The previous version put a 36px icon inside a 128px-tall gradient box, which
+ * reads as an image that failed to load. A plain, dense list is both more
+ * honest with no photography available and easier to scan — this is reference
+ * information, not a gallery.
+ */
 export default function Facilities() {
   return (
-    <section id="facilities" className="section-pad bg-primary-50/40">
-      <div className="container-clinic flex flex-col gap-12">
+    <section
+      id="facilities"
+      aria-labelledby="facilities-heading"
+      className="section-pad bg-white"
+    >
+      <div className="container-page flex flex-col gap-10">
         <SectionHeading
+          id="facilities-heading"
           eyebrow="Facilities"
-          title="Built for comfort, equipped for care"
-          description="Every corner of GV Polyclinic is designed with patients in mind, from consultation rooms to accessible pathways."
+          title="What's inside the building"
+          description="Everything below is on site, so a consultation, a test and a prescription do not mean three separate trips."
         />
 
-        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {FACILITIES.map(({ icon: Icon, title, description }, i) => (
-            <Reveal key={title} delay={(i % 4) * 0.07} direction="up">
-              <div className="group relative flex h-full flex-col gap-4 overflow-hidden rounded-2xl bg-white p-6 ring-1 ring-primary-50 shadow-soft transition-all duration-300 hover:-translate-y-1.5 hover:shadow-soft-lg">
-                <div className="relative flex h-32 items-center justify-center overflow-hidden rounded-xl bg-gradient-to-br from-primary-50 to-teal-50">
-                  <Icon size={36} className="text-primary-500 transition-transform duration-500 group-hover:scale-110" />
+        <Reveal>
+          {/* The 1px grid gap over a tinted background draws every divider,
+              so there is no nth-child arithmetic to get wrong when the number
+              of facilities or columns changes. */}
+          <ul className="grid gap-px overflow-hidden rounded-xl border border-ink-100 bg-ink-100 md:grid-cols-2">
+            {FACILITIES.map(({ icon: Icon, title, description }) => (
+              <li
+                key={title}
+                className="flex items-start gap-4 bg-white p-5 sm:p-6"
+              >
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-brand-50 text-brand-700">
+                  <Icon size={17} />
+                </span>
+                <div className="min-w-0">
+                  <h3 className="flex items-center gap-2 text-base font-bold text-ink-900">
+                    {title}
+                    <FaCheck className="shrink-0 text-accent-600" size={11} />
+                  </h3>
+                  <p className="mt-1 text-sm text-ink-600">{description}</p>
                 </div>
-                <div>
-                  <h3 className="text-base font-bold text-ink-900">{title}</h3>
-                  <p className="mt-1.5 text-sm leading-relaxed text-ink-500">{description}</p>
-                </div>
-              </div>
-            </Reveal>
-          ))}
-        </div>
+              </li>
+            ))}
+          </ul>
+        </Reveal>
       </div>
     </section>
   );

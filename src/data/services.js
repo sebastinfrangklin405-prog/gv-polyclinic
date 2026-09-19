@@ -14,7 +14,7 @@ export const SERVICES = [
   {
     icon: FaStethoscope,
     title: "General Consultation",
-    description: "One-on-one consultations with experienced physicians for any health concern.",
+    description: "One-on-one consultations with skilled physicians for any health concern.",
   },
   {
     icon: FaShieldVirus,
