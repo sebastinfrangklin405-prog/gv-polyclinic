@@ -1,4 +1,12 @@
-import { FaStethoscope, FaVenus, FaDeaf, FaUserMd } from "react-icons/fa";
+import {
+  FaStethoscope,
+  FaVenus,
+  FaBaby,
+  FaTint,
+  FaAllergies,
+  FaDeaf,
+  FaUserMd,
+} from "react-icons/fa";
 
 // Keep this list in sync with the doctors on staff (see doctors.js) — the
 // Appointment form filters doctors by department, so listing a specialty
@@ -17,6 +25,27 @@ export const DEPARTMENTS = [
     name: "Gynecology",
     description:
       "Compassionate women's health services covering prenatal care, wellness exams, and consultations.",
+  },
+  {
+    id: "paediatrics",
+    icon: FaBaby,
+    name: "Paediatrics",
+    description:
+      "Child health from newborn checks and vaccinations through to growth, nutrition and childhood illnesses.",
+  },
+  {
+    id: "diabetology",
+    icon: FaTint,
+    name: "Diabetology",
+    description:
+      "Diagnosis, monitoring and long-term management of diabetes, including diet guidance and follow-up reviews.",
+  },
+  {
+    id: "dermatology",
+    icon: FaAllergies,
+    name: "Dermatology",
+    description:
+      "Treatment for skin, hair and nail concerns — from acne, rashes and allergies to infections and pigmentation.",
   },
   {
     id: "ent",

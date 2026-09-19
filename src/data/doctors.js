@@ -1,6 +1,8 @@
 /**
- * `specialization` must exactly match a `name` in departments.js — the Care
- * section and the booking form both filter on it.
+ * Every entry in `specializations` must exactly match a `name` in
+ * departments.js — the Care section and the booking form both filter on it.
+ * It is a list because several doctors here practise in more than one
+ * department, and a single string forced them to be hidden from all but one.
  *
  * The optional fields below are what patients most often look for when
  * choosing a doctor, and the UI renders each one only when it is filled in.
@@ -22,7 +24,7 @@ export const DOCTORS = [
     name: "Dr. P. Manikannan",
     qualification: "MBBS, DLO",
     role: "ENT Specialist",
-    specialization: "ENT",
+    specializations: ["ENT"],
     languages: [],
     experienceYears: null,
     timings: "",
@@ -31,8 +33,8 @@ export const DOCTORS = [
     id: "dr-kamala-deepak",
     name: "Dr. Kamala Deepak",
     qualification: "MBBS, MD, DOTO, MCh",
-    role: "Gynecologist & Diabetology, Child Care",
-    specialization: "Gynecology",
+    role: "Gynecologist, Paediatrician & Diabetologist",
+    specializations: ["Gynecology", "Paediatrics", "Diabetology"],
     languages: [],
     experienceYears: null,
     timings: "",
@@ -42,7 +44,7 @@ export const DOCTORS = [
     name: "Dr. Deepak",
     qualification: "MBBS, MS, MCh, FRCS",
     role: "Urologist",
-    specialization: "Urology",
+    specializations: ["Urology"],
     languages: [],
     experienceYears: null,
     timings: "",
@@ -51,8 +53,8 @@ export const DOCTORS = [
     id: "dr-s-vignesh",
     name: "Dr. S. Vignesh",
     qualification: "MBBS, MD",
-    role: "General Physician",
-    specialization: "General Medicine",
+    role: "General Physician & Dermatologist",
+    specializations: ["General Medicine", "Dermatology"],
     languages: [],
     experienceYears: null,
     timings: "",
@@ -62,7 +64,7 @@ export const DOCTORS = [
     name: "Dr. Nandhini",
     qualification: "MBBS, MS, FMAS, FFMAS",
     role: "Gynecologist & Fertility Consultant",
-    specialization: "Gynecology",
+    specializations: ["Gynecology"],
     languages: [],
     experienceYears: null,
     timings: "",

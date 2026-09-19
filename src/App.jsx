@@ -24,9 +24,14 @@ export default function App() {
     setBookingSeed({ department: id, doctor: "" });
   };
 
-  const handleBookDoctor = (doctor) => {
-    const department = DEPARTMENTS.find((item) => item.name === doctor.specialization);
-    setBookingSeed({ department: department?.id ?? "", doctor: doctor.id });
+  // `departmentId` is the tab the patient was on when they clicked. Doctors who
+  // practise in several departments have no single correct answer otherwise, so
+  // their own list is only the fallback.
+  const handleBookDoctor = (doctor, departmentId) => {
+    const fallback = DEPARTMENTS.find((item) =>
+      doctor.specializations.includes(item.name)
+    );
+    setBookingSeed({ department: departmentId ?? fallback?.id ?? "", doctor: doctor.id });
   };
 
   return (

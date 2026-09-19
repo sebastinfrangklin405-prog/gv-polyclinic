@@ -154,7 +154,9 @@ export default function Booking({ seed }) {
   const availableDoctors = useMemo(() => {
     if (!values.department) return DOCTORS;
     const department = DEPARTMENTS.find((item) => item.id === values.department);
-    return DOCTORS.filter((doctor) => doctor.specialization === department?.name);
+    return DOCTORS.filter((doctor) =>
+      doctor.specializations.includes(department?.name)
+    );
   }, [values.department]);
 
   const update = (field) => (event) => {

@@ -42,7 +42,7 @@ function shortName(fullName) {
   return [title, surname].filter(Boolean).join(" ");
 }
 
-function DoctorCard({ doctor, onBook }) {
+function DoctorCard({ doctor, department, onBook }) {
   const details = [
     doctor.experienceYears && {
       icon: FaCheck,
@@ -106,7 +106,7 @@ function DoctorCard({ doctor, onBook }) {
         <Button
           as="a"
           href="#booking"
-          onClick={() => onBook(doctor)}
+          onClick={() => onBook(doctor, department.id)}
           size="sm"
           className="w-full"
         >
@@ -159,7 +159,7 @@ export default function Care({ activeDepartment, onDepartmentChange, onBookDocto
   );
 
   const doctors = useMemo(
-    () => DOCTORS.filter((doctor) => doctor.specialization === department.name),
+    () => DOCTORS.filter((doctor) => doctor.specializations.includes(department.name)),
     [department]
   );
 
@@ -217,7 +217,12 @@ export default function Care({ activeDepartment, onDepartmentChange, onBookDocto
                 covers the patient who does not know who to ask for. */}
             <div className="card-grid">
               {doctors.map((doctor) => (
-                <DoctorCard key={doctor.id} doctor={doctor} onBook={onBookDoctor} />
+                <DoctorCard
+                  key={doctor.id}
+                  doctor={doctor}
+                  department={department}
+                  onBook={onBookDoctor}
+                />
               ))}
               <HelpTile hasDoctors={doctors.length > 0} department={department} />
             </div>
