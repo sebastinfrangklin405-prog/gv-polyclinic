@@ -28,10 +28,10 @@ export default function App() {
   // practise in several departments have no single correct answer otherwise, so
   // their own list is only the fallback.
   const handleBookDoctor = (doctor, departmentId) => {
-    const fallback = DEPARTMENTS.find((item) =>
-      doctor.specializations.includes(item.name)
+    const primary = DEPARTMENTS.find(
+      (item) => item.name === doctor.specializations[0]
     );
-    setBookingSeed({ department: departmentId ?? fallback?.id ?? "", doctor: doctor.id });
+    setBookingSeed({ department: departmentId ?? primary?.id ?? "", doctor: doctor.id });
   };
 
   return (

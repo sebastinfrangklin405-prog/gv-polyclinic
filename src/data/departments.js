@@ -3,7 +3,6 @@ import {
   FaVenus,
   FaBaby,
   FaTint,
-  FaAllergies,
   FaDeaf,
   FaUserMd,
 } from "react-icons/fa";
@@ -39,13 +38,6 @@ export const DEPARTMENTS = [
     name: "Diabetology",
     description:
       "Diagnosis, monitoring and long-term management of diabetes, including diet guidance and follow-up reviews.",
-  },
-  {
-    id: "dermatology",
-    icon: FaAllergies,
-    name: "Dermatology",
-    description:
-      "Treatment for skin, hair and nail concerns — from acne, rashes and allergies to infections and pigmentation.",
   },
   {
     id: "ent",
